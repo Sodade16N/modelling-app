@@ -6,15 +6,8 @@ exports.createUser = async (req, res) => {
     const { fullName, email, password } = req.body;
     const files = req.files;
 
-    const user = await userModel.find({ email });
 
-    if (user.length === 1) {
-      return res.status(400).json({
-        message: `${email} has already been used by another user.`
-      })
-    };
-
-    const newUser = await userModel.create({
+    const user = await userModel.create({
       fullName,
       email,
       password,
@@ -24,7 +17,7 @@ exports.createUser = async (req, res) => {
 
     res.status(201).json({
       message: 'User created successfully',
-      data: newUser
+      data: user
     })
   } catch (error) {
     console.log(error.message);
